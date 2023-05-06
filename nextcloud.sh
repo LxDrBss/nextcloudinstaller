@@ -43,11 +43,11 @@ if [[ "$input" == [yY] ]]; then
 		read -p "Choose your Drive/Partition by green index number: " input
 		echo ''
 		partition=${drivesName[$i]}
-		echo "You chose$RED $partition$NORMAL."
+		echo -e "You chose $RED $partition$NORMAL."
 		echo ""
 		checkMount=( $(lsblk -o NAME,MOUNTPOINT | grep "$partition"))
 		declare -p checkMount >> /dev/null
-		if [[ ${checkMount[1]} == "" ]]; then
+		if [[ "${checkMount[1]}" == "" ]]; then
 			read -p "Now name folder which your device will be mounted: " input
 			if [[ -e /media/$input ]]; then echo ""; echo "This folder already exists."; echo ""; fi
 			mountPath=/media/$input
