@@ -42,10 +42,10 @@ if [[ "$input" == [yY] ]]; then
 		echo ''
 		read -p "Choose your Drive/Partition by green index number: " input
 		echo ''
-		partition=${drivesName[$input]}
-		echo -e "You chose $RED $partition $NORMAL."
+		part=${drivesName[$input]}
+		echo -e "You chose $RED $part $NORMAL."
 		echo ""
-		checkMount=( $(lsblk -o NAME,MOUNTPOINT | grep "$partition"))
+		checkMount=( $(lsblk -o NAME,MOUNTPOINT | grep "$part"))
 		declare -p checkMount >> /dev/null
 		if [[ "${checkMount[1]}" == "" ]]; then
 			read -p "Now name folder which your device will be mounted: " input
@@ -54,9 +54,9 @@ if [[ "$input" == [yY] ]]; then
 			echo ""
 			echo -e "Your external drive is mounted in $RED $mountPath $NORMAL"
 			sudo mkdir $mountPath
-			sudo mount /dev/$partition $mountPath
-			partUUID=$(sudo blkid | grep "$partition" | grep -o -E 'PARTUUID="[a-zA-Z|0-9|\-]*' | cut -c 11-)
-			getFormat=( $(sudo lsblk -f -o NAME,FSTYPE | grep "$partition"))
+			sudo mount /dev/$part $mountPath
+			partUUID=$(sudo blkid | grep "$part" | grep -o -E 'PARTUUID="[a-zA-Z|0-9|\-]*' | cut -c 11-)
+			getFormat=( $(sudo lsblk -f -o NAME,FSTYPE | grep "$part"))
 			declare -p getFormat >> /dev/null
 			format=${getFormat[1]}
 			sudo chmod 646 /etc/fstab
@@ -64,7 +64,7 @@ if [[ "$input" == [yY] ]]; then
 			sudo chmod 644 /etc/fstab
 			sudo chown -R www-data:www-data $mountPath
 		else
-			printf "$RED"; echo -e "$partition $NORMAL is already mounted in$YELLOW ${checkMount[1]} $NORMAL"; echo ""
+			printf "$RED"; echo -e "$part $NORMAL is already mounted in $YELLOW ${checkMount[1]} $NORMAL"; echo ""
 		fi
 	fi
 fi
