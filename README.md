@@ -3,20 +3,22 @@
 This works totally fine on my Raspberry Pi. 
 Setup: 
 - fully new flashed Raspberry Pi OS (use Raspberry Pi Imager for headless start)
-- USB-Drive connected as sda and in ext4 format (should always be sda when its the only one connected) for cloud storage
+- USB-Drive for cloud-storage. If there isn't one, you can skip and continue.
 
 What it should do:
 - disable automount from udisk (prevent random mounting your drive)
-- mount USB-Drive in /media/storage and activate automount for it on boot
-- change owner from /media/storage to www-data (necessary so that nextcloud can access it later)
+- mount USB-Drive in /media/[yourfolder] and activate automount for it on boot
+- change owner from /media/[yourfolder] to www-data (necessary so that nextcloud can access it later)
 - finally install nextcloud!
 
+Options:
+- uncomment #set -e before executing the script to exit after an error occurs
 
-When you got any questions or wishes to extend this script please let me know!
+When you got any bugs, questions or wishes to fix or extend this script please let me know!
 
 Installation:
-wget 
-sudo chmod 744 nextcloud.sh
+wget https://raw.githubusercontent.com/LxDrBss/nextcloudinstaller/main/nextcloud.sh
+sudo chmod +x nextcloud.sh
 ./nextcloud.sh
 
 
