@@ -19,11 +19,7 @@ When you got any bugs, questions or wishes to fix or extend this script please l
 
 Installation:
 
-wget https://raw.githubusercontent.com/LxDrBss/nextcloudinstaller/main/nextcloud.sh
-
-sudo chmod +x nextcloud.sh
-
-./nextcloud.sh
+wget https://raw.githubusercontent.com/LxDrBss/nextcloudinstaller/main/nextcloud.sh && sudo chmod +x nextcloud.sh && ./nextcloud.sh
 
 
 I totally dont own or work together with nextcloud. Just had some issues with nextcloud using my USB-Drive as storage and want you all to have an easy installation.
