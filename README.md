@@ -9,6 +9,7 @@ What it should do:
 - disable automount from udisk (prevent random mounting your drive)
 - mount USB-Drive in /media/[yourfolder] and activate automount for it on boot
 - change owner from /media/[yourfolder] to www-data (necessary so that nextcloud can access it later)
+- ([yourfolder] can be set in the running script)
 - finally install nextcloud!
 
 Options:
