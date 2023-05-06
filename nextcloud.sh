@@ -14,8 +14,9 @@ declare -p drivesSpace >> /dev/null
 
 #Start of Script
 
-echo "Welcome to nextcloudinstaller!"
-
+echo $'\n'
+echo -e "$GREEN Welcome to nextcloudinstaller! $NORMAL"
+echo $'\n'
 
 #Disable udisks auto-mount (if not already happened)
 if [[ ! -e /lib/udev/rules.d/80-udisks2-noautomount.rules ]]; then
