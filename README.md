@@ -14,5 +14,10 @@ What it should do:
 
 When you got any questions or wishes to extend this script please let me know!
 
+Installation:
+wget 
+sudo chmod 744 nextcloud.sh
+./nextcloud.sh
+
 
 I totally dont own or work together with nextcloud. Just had some issues with nextcloud using my USB-Drive as storage and want you all to have an easy installation.
