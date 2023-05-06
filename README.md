@@ -18,8 +18,11 @@ Options:
 When you got any bugs, questions or wishes to fix or extend this script please let me know!
 
 Installation:
+
 wget https://raw.githubusercontent.com/LxDrBss/nextcloudinstaller/main/nextcloud.sh
+
 sudo chmod +x nextcloud.sh
+
 ./nextcloud.sh
 
 
