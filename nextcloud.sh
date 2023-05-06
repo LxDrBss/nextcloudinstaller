@@ -29,13 +29,10 @@ read -p "Do you wanna configurate an external storage device(USB)? (Y|N): " inpu
 if [[ "$input" == [yY] ]]; then
 	#Check if there is a external drive for storage connected
 	if [[ ${#drivesName[@]} == 0 ]]; then
-		drive=0
 		echo "You got no external drive connected."
 		read -p "Continue without configuring external drive or exit?(C|E): " input
 		if [[ "$input" == "E" ]]; then exit 1; fi
-		fi
 	else
-		drive=1
 		echo $'\n'
 		for (( i=0; i < ${#drivesName[@]}; i++ ))
 		do
@@ -45,21 +42,27 @@ if [[ "$input" == [yY] ]]; then
 		read -p "Choose your Drive/Partition by green index number: " input
 		echo ''
 		partition=${drivesName[$i]}
-		echo "You chose $RED$partition$NORMAL."
+		echo "You chose$RED $partition$NORMAL."
 		echo ""
-		read -p "Now name folder which your device will be mounted: " input
-		mountPath=/media/$input
-		echo ""
-		echo -e "Your external drive is mounted in $RED$mountPath$NORMAL"
-		sudo mkdir $mountPath
-		sudo mount /dev/$partition $mountPath
-		partUUID=$(sudo blkid | grep "$partition" | grep -o -E 'PARTUUID="[a-zA-Z|0-9|\-]*' | cut -c 11-)
-		getFormat=( $(sudo lsblk -f -o NAME,FSTYPE | grep "$partition"))
-		format=${getFormat[1]}
-		sudo chmod 646 /etc/fstab
-		sudo printf "PARTUUID="$partUUID" "$mountPath" $format defaults 0 0">> /etc/fstab
-		sudo chmod 644 /etc/fstab
-		sudo chown -R www-data:www-data $pathSSD
+		checkMount=( $(lsblk -o NAME,MOUNTPOINT | grep "$partition"))
+		if [[ ${checkMount[1]} == "" ]]; then
+			read -p "Now name folder which your device will be mounted: " input
+			if [[ -e /media/$input ]]; then echo ""; echo "This folder already exists."; echo ""; fi
+			mountPath=/media/$input
+			echo ""
+			echo -e "Your external drive is mounted in $RED$mountPath$NORMAL"
+			sudo mkdir $mountPath
+			sudo mount /dev/$partition $mountPath
+			partUUID=$(sudo blkid | grep "$partition" | grep -o -E 'PARTUUID="[a-zA-Z|0-9|\-]*' | cut -c 11-)
+			getFormat=( $(sudo lsblk -f -o NAME,FSTYPE | grep "$partition"))
+			format=${getFormat[1]}
+			sudo chmod 646 /etc/fstab
+			sudo printf "PARTUUID="$partUUID" "$mountPath" $format defaults 0 0">> /etc/fstab
+			sudo chmod 644 /etc/fstab
+			sudo chown -R www-data:www-data $mountPath
+		else
+			printf "$RED"; echo -e "$partition$NORMAL is already mounted in $YELLOW${checkMount[1]}$NORMAL"; echo ""
+		fi
 	fi
 fi
 
