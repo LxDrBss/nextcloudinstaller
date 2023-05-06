@@ -42,8 +42,8 @@ if [[ "$input" == [yY] ]]; then
 		echo ''
 		read -p "Choose your Drive/Partition by green index number: " input
 		echo ''
-		partition=${drivesName[$i]}
-		echo -e "You chose $RED $partition$NORMAL."
+		partition=${drivesName[$input]}
+		echo -e "You chose $RED $partition $NORMAL."
 		echo ""
 		checkMount=( $(lsblk -o NAME,MOUNTPOINT | grep "$partition"))
 		declare -p checkMount >> /dev/null
@@ -52,7 +52,7 @@ if [[ "$input" == [yY] ]]; then
 			if [[ -e /media/$input ]]; then echo ""; echo "This folder already exists."; echo ""; fi
 			mountPath=/media/$input
 			echo ""
-			echo -e "Your external drive is mounted in $RED$mountPath$NORMAL"
+			echo -e "Your external drive is mounted in $RED $mountPath $NORMAL"
 			sudo mkdir $mountPath
 			sudo mount /dev/$partition $mountPath
 			partUUID=$(sudo blkid | grep "$partition" | grep -o -E 'PARTUUID="[a-zA-Z|0-9|\-]*' | cut -c 11-)
