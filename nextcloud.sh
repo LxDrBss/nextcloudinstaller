@@ -45,6 +45,7 @@ if [[ "$input" == [yY] ]]; then
 		echo "You chose$RED $partition$NORMAL."
 		echo ""
 		checkMount=( $(lsblk -o NAME,MOUNTPOINT | grep "$partition"))
+		declare -p checkMount >> /dev/null
 		if [[ ${checkMount[1]} == "" ]]; then
 			read -p "Now name folder which your device will be mounted: " input
 			if [[ -e /media/$input ]]; then echo ""; echo "This folder already exists."; echo ""; fi
@@ -55,13 +56,14 @@ if [[ "$input" == [yY] ]]; then
 			sudo mount /dev/$partition $mountPath
 			partUUID=$(sudo blkid | grep "$partition" | grep -o -E 'PARTUUID="[a-zA-Z|0-9|\-]*' | cut -c 11-)
 			getFormat=( $(sudo lsblk -f -o NAME,FSTYPE | grep "$partition"))
+			declare -p getFormat >> /dev/null
 			format=${getFormat[1]}
 			sudo chmod 646 /etc/fstab
 			sudo printf "PARTUUID="$partUUID" "$mountPath" $format defaults 0 0">> /etc/fstab
 			sudo chmod 644 /etc/fstab
 			sudo chown -R www-data:www-data $mountPath
 		else
-			printf "$RED"; echo -e "$partition$NORMAL is already mounted in $YELLOW${checkMount[1]}$NORMAL"; echo ""
+			printf "$RED"; echo -e "$partition $NORMAL is already mounted in$YELLOW ${checkMount[1]} $NORMAL"; echo ""
 		fi
 	fi
 fi
